@@ -21,7 +21,7 @@ class Settings():
                  pgsqluser='flaskuser',
                  pgsqlpassword='aaaaaaaa',
                  pgsqldataBase='mydb1',
-                 pgsqltableName='cafe',
+                 pgsqltableName='employee',
                  pgsqlquery='',
                  elkhost="localhost",
                  elkport='9200'):
@@ -82,7 +82,7 @@ def main():
     # Step 1: Create a Settings
 
     BATCH_SIZE      = 5
-    TABLE_NAME      = "cafe"
+    TABLE_NAME      = "employee"
     DATABASE_NAME   = 'mydb1'
     TOTAL_RECORDS   = 0
 
@@ -129,21 +129,21 @@ def main():
         df1 = df.to_dict("records")
 
         list_df.append(df1)
-        
+
         print(" ")
         print('------------------------')
         print("list_df: ", list_df)
         print(" ")
-    
+
     flat_list = [item for sublist in list_df for item in sublist]
     print("Flat List: ", flat_list)
     action = [
         {
             '_index': '{}'.format(TABLE_NAME),
-            '_id': c,
-            '_source':x
+            '_id': chunk['id'],
+            '_source':chunk
         }
-        for c, x in enumerate(flat_list)
+        for chunk in flat_list
     ]      
     print("Records: ", action)
     print("-----------------------")    
