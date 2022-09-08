@@ -8,3 +8,10 @@ Query:
 Output:
 
 {"took":4,"responses":[{"took":1,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":4,"relation":"eq"},"max_score":null,"hits":[]},"aggregations":{"licence_num_count":{"value":4},"licence_num":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"2423098367","doc_count":1},{"key":"2434782902","doc_count":1},{"key":"2454831108","doc_count":1},{"key":"2466973896","doc_count":1}]}},"status":200},{"took":4,"timed_out":false,"_shards":{"total":1,"successful":1,"skipped":0,"failed":0},"hits":{"total":{"value":11,"relation":"eq"},"max_score":null,"hits":[]},"aggregations":{"phone_count":{"value":11},"phone":{"doc_count_error_upper_bound":0,"sum_other_doc_count":1,"buckets":[{"key":"2417126646","doc_count":1},{"key":"2425841984","doc_count":1},{"key":"2432471006","doc_count":1},{"key":"2433072992","doc_count":1},{"key":"2436469491","doc_count":1},{"key":"2438736819","doc_count":1},{"key":"2472532417","doc_count":1},{"key":"2475968667","doc_count":1},{"key":"2489964119","doc_count":1},{"key":"2491887834","doc_count":1}]}},"status":200}]}
+
+curl -XGET "http://localhost:9200/emp_details_new/_msearch" -H 'Content-Type: application/json' -d'
+{"index": "emp_details_new"}
+{"_source":[],"size":0,"min_score":1,"query":{"multi_match":{"query":"24","fields":["licence_num"],"type":"phrase_prefix"}},"aggs":{"licence_num":{"terms":{"field":"licence_num.keyword","include":"24.*"}},"licence_num_count":{"value_count":{"field":"licence_num.keyword"}}}}
+{"index": "emp_details_new"}
+{"_source":[],"size":0,"min_score":1,"query":{"multi_match":{"query":"24","fields":["phone"],"type":"phrase_prefix"}},"aggs":{"phone":{"terms":{"field":"phone.keyword","include":"24.*"}},"phone_count":{"value_count":{"field":"phone.keyword"}}}}
+'
