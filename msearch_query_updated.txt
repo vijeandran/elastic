@@ -15,3 +15,8 @@ curl -XGET "http://localhost:9200/emp_details_new/_msearch" -H 'Content-Type: ap
 {"index": "emp_details_new"}
 {"_source":[],"size":0,"min_score":1,"query":{"multi_match":{"query":"24","fields":["phone"],"type":"phrase_prefix"}},"aggs":{"phone":{"terms":{"field":"phone.keyword","include":"24.*"}},"phone_count":{"value_count":{"field":"phone.keyword"}}}}
 '
+Latest:
+curl -XGET "http://localhost:9200/emp_details_1_1/_msearch" -H 'Content-Type: application/json' -d'
+{"index": "emp_details_1_1"}
+{"size":0,"min_score":1,"query":{"prefix":{"ssn.keyword":"69"}},"aggs":{"phone":{"terms":{"field":"ssn.keyword","include":"69.*"}},"ssn_count":{"value_count":{"field":"ssn.keyword"}}}}
+'
